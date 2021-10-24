@@ -9,7 +9,6 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject _squareBoard = default;
     [SerializeField] private Color32 _firstColor = Color.white;
     [SerializeField] private Color32 _secondColor = Color.white;
-    [SerializeField] private Camera _camera = default;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +21,7 @@ public class Board : MonoBehaviour
             for (int j = 0; j < _columnLength; j++)
             {
                 GameObject __square = Instantiate(_squareBoard, __board.transform) as GameObject;
-                __square.name = i.ToString().PadLeft(2, '0') + j.ToString().PadLeft(2, '0');
+                __square.name = i.ToString().PadLeft(_rowLength.ToString().Length, '0') + j.ToString().PadLeft(_columnLength.ToString().Length, '0');
                 __square.transform.position = new Vector2(j, i);
 
                 SpriteRenderer __sprite = __square.GetComponent<SpriteRenderer>();
@@ -33,6 +32,11 @@ public class Board : MonoBehaviour
                 else
                 {
                     __sprite.color = _secondColor;
+                }
+
+                if (i == 0 || j == 0 || j == _columnLength - 1 || i == _rowLength - 1)
+                {
+                    __square.AddComponent(typeof(BoxCollider2D));
                 }
             }
         }

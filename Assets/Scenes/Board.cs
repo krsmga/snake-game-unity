@@ -10,7 +10,13 @@ public class Board : MonoBehaviour
     [SerializeField] private Color32 _firstColor = Color.white;
     [SerializeField] private Color32 _secondColor = Color.white;
 
-    // Start is called before the first frame update
+    public static Board Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         GameObject __board = gameObject;
@@ -58,15 +64,10 @@ public class Board : MonoBehaviour
             float difference = targetRatio / screenRatio;
             Camera.main.orthographicSize = ((__boundSize.y * _rowLength) / 2) * difference;
         }
-
-
-
-
     }
 
-    // Update is called once per frame
-    void Update()
+    public static Vector2 RandomizePosition()
     {
-
+        return new Vector2(Random.Range(1, Instance._columnLength - 1), Random.Range(1, Instance._rowLength - 1));
     }
 }
